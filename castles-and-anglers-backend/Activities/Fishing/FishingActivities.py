@@ -21,11 +21,22 @@ class FishingActivities():
 	# inside of the class instead of 
 	# referring to self
 	def goFishing(cls, user):
-		outcomes = ['win', 'lose', 'draw']
-		print('You are fishing\n')
+		if 'fishing rod' in user.userInventory.inventory:
+			outcomes = ['win', 'lose', 'draw']
+			print("You are using the fishing rod\n")
+		elif 'lured rod' in user.userInventory.inventory:
+			outcomes = ['win', 'win', 'snag']
+			print("You are fishing with the lured rod\n")
+		elif 'worm rod' in user.userInventory.inventory:
+			outcomes = ['win', 'trade', 'snag']
+			print("You are fishing with the worm rod\n")
+		elif 'bread rod' in user.userInventory.inventory:
+			outcomes = ['win', 'trade', 'snag', 'snag']
+			print("You are fishing with the bread rod\n")
 		cls.castPole()
 		random.shuffle(outcomes)
 		currentFishingOutcome = outcomes[0]
+
 		if (currentFishingOutcome == 'win'):
 			user.addToInventory(cls.catchFish())
 		if (currentFishingOutcome == 'lose'):
@@ -33,6 +44,12 @@ class FishingActivities():
 		if (currentFishingOutcome == 'draw'):
 			print('you caught a lure')
 			user.addToInventory('lure')
+		if (currentFishingOutcome == 'snag'):
+			user.loseLure()
+		if (currentFishingOutcome == 'trade'):
+			user.loseLure()
+			print("but, ")
+			user.addToInventory(cls.catchFish())
 
 	def catchFish():
 		random.shuffle(Fishes)

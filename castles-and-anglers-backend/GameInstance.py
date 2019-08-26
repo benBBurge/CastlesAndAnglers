@@ -32,7 +32,7 @@ class GameInstance():
 	def playGame(self, me):
 		print(self.myWords)
 		while self.myWords != "quit":
-			myWords = self.myWords
+			myWords = self.myWords.lower()
 			if(myWords == "show health"):
 				me.showHealth()
 			elif(myWords == "help"):
@@ -42,7 +42,8 @@ class GameInstance():
 			elif (myWords == "eat a fish"):
 				me.eatFish()
 			elif(myWords == "take damage"):
-				me.takeDamage(1)
+				me.takeDamage(4)
+				me.showHealth()
 			elif(myWords == "session time"):
 				self.printSessionTime()
 			elif(myWords == "show inventory"):
@@ -57,6 +58,9 @@ class GameInstance():
 			or myWords == "the market"):
 				self.currentLocation = myWords
 				print("you went to " + myWords)
+				me.chanceToFindBait()
+			elif(myWords == "equipt lure"):
+				me.equiptLure()
 			elif(myWords != ''):
 				print("Sorry, I didn't catch that.")
 				print("You can quit by typing quit.")

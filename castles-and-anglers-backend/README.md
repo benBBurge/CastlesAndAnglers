@@ -15,6 +15,7 @@
     - travel away
     - show inventory
     - go fishing
+    - equipt lure
     - help
     - quit
 
