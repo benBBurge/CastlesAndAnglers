@@ -66,50 +66,58 @@ class User():
 			else:
 				print("Sorry, you don't have that fish!")
 
-#equiptLure() checks to make sure the player has a fishing rod.  If only one type of lure is in the players inventory
+#equipLure() checks to make sure the player has a fishing rod.  If only one type of lure is in the players inventory
 #it will be added to the fishing rod without prompt.  If there are multible types, the player will select one.
-#This has gotten iffy as I added more lure types are added-- better way to do this?	B8/26/19
+#might be useful to write another function for checking lure types?  BB 9/4/19
 
-	def equiptLure(self):
+	def equipLure(self):
 		if 'fishing rod' not in self.userInventory.inventory:
-			print("Fishing rod is already equipt with bait")
+			print("Fishing rod is already equip with bait")
 		else:
-			if 'lure' not in self.userInventory.inventory and 'worm' not in self.userInventory.inventory and 'bread' not in self.userInventory.inventory:
-				print("Sorry, no bait in inventory!")
-			elif 'lure' in self.userInventory.inventory and 'worm' not in self.userInventory.inventory and 'bread' not in self.userInventory.inventory:
-				self.equiptLuredRod()
-			elif 'worm' in self.userInventory.inventory and 'lure' not in self.userInventory.inventory and 'bread' not in self.userInventory.inventory:
-				self.equiptWormRod()
-			elif 'bread' in self.userInventory.inventory and 'lure' not in self.userInventory.inventory and 'worm' not in self.userInventory.inventory:
-				self.equiptBreadRod()
-			elif 'lure' in self.userInventory.inventory and 'worm' in self.userInventory.inventory and 'bread' not in self.userInventory.inventory:
-				equiptment = input("Equipt 'lure' or 'worm' to fishing rod?\n")
-				if equiptment == 'lure':
-					self.equiptLuredRod()
-				if equiptment == 'worm':
-					self.equiptWormRod()
-			elif 'bread' in self.userInventory.inventory and 'worm' in self.userInventory.inventory and 'lure' not in self.userInventory.inventory:
-				equiptment = input("Equipt 'bread' or 'worm' to fishing rod?\n")
-				if equiptment == 'bread':
-					self.equiptBreadRod()
-				if equiptment == 'worm':
-					self.equiptWormRod()
-			elif 'bread' in self.userInventory.inventory and 'lure' in self.userInventory.inventory and 'worm' not in self.userInventory.inventory:
-				equiptment = input("Equipt 'bread' or 'lure' to fishing rod?\n")
-				if equiptment == 'bread':
-					self.equiptBreadRod()
-				if equiptment == 'lure':
-					self.equiptLuredRod()
-			else:	
-				equiptment = input("Equipt 'bread', 'lure', or 'worm' to fishing rod?\n")
-				if equiptment == 'lure':
-					self.equiptLuredRod()
-				if equiptment == 'worm':
-					self.equiptWormRod()
-				if equiptment == 'bread':
-					self.equiptBreadRod()
+			inventoryBait = set(self.userInventory.inventory).intersection(Activities.Fishing.Fishes.Lures)
+			if len(inventoryBait) == 1:
+				equipment = ''.join(inventoryBait)
+				print("Your last piece of bait: " + equipment)
+				if equipment == 'bread':
+					self.equipBreadRod()
+				elif equipment == 'fly':
+					self.equipFlyRod()
+				elif equipment == 'lure':
+					self.equipLuredRod()
+				elif equipment == 'worm':
+					self.equipWormRod()
+			elif len(inventoryBait) > 1:
+				strBait = ', '.join(inventoryBait)
+				print(strBait)
+				equipment = input("equip one of those to fishing rod?\n")
+				if equipment == 'bread':
+					self.equipBreadRod()
+				elif equipment == 'fly':
+					self.equipFlyRod()
+				elif equipment == 'lure':
+					self.equipLuredRod()
+				elif equipment == 'worm':
+					self.equipWormRod()
+			else:
+				print("Inventory is devoid of bait.")
 
-	def equiptLuredRod(self):
+	def equipBreadRod(self):
+		if 'bread' in self.userInventory.inventory:
+			self.removeFromInventory('bread')
+			self.removeFromInventory('fishing rod')
+			self.addToInventory('bread rod')
+		else:
+			print("Sorry, you don't have any bread!")
+
+	def equipFlyRod(self):
+		if 'fly' in self.userInventory.inventory:
+			self.removeFromInventory('fly')
+			self.removeFromInventory('fishing rod')
+			self.addToInventory('fly rod')
+		else:
+			print("Sorry, you don't have a lure!")
+
+	def equipLuredRod(self):
 		if 'lure' in self.userInventory.inventory:
 			self.removeFromInventory('lure')
 			self.removeFromInventory('fishing rod')
@@ -118,36 +126,31 @@ class User():
 		else:
 			print("Sorry, you don't have a lure!")
 
-	def equiptWormRod(self):
+	def equipWormRod(self):
 		if 'worm' in self.userInventory.inventory:
 			self.removeFromInventory('worm')
 			self.removeFromInventory('fishing rod')
 			self.addToInventory('worm rod')
-			#print("Worm added to fishing rod.")
 		else:
 			print("Sorry, you don't have a worm!")
 
-	def equiptBreadRod(self):
-		if 'bread' in self.userInventory.inventory:
-			self.removeFromInventory('bread')
-			self.removeFromInventory('fishing rod')
-			self.addToInventory('bread rod')
-		else:
-			print("Sorry, you don't have any bread!")
-
 	def loseLure(self):
-		if 'lured rod' in self.userInventory.inventory:
+		if 'bread rod' in self.userInventory.inventory:
+			print("something took the bait")
+			self.removeFromInventory('bread rod')
+			self.addToInventory('fishing rod')
+		elif 'lured rod' in self.userInventory.inventory:
 			print("the line snaps and you lose the lure")
 			self.removeFromInventory('lured rod')
+			self.addToInventory('fishing rod')
+		elif 'fly rod' in self.userInventory.inventory:
+			print("the bait is lost")
+			self.removeFromInventory('fly rod')
 			self.addToInventory('fishing rod')
 		elif 'worm rod' in self.userInventory.inventory:
 			print("something took the bait")
 			self.removeFromInventory('worm rod')
-			self.addToInventory('fishing rod')
-		elif 'bread rod' in self.userInventory.inventory:
-			print("something took the bait")
-			self.removeFromInventory('bread rod')
-			self.addToInventory('fishing rod')
+			self.addToInventory('fishing rod')		
 		else:
 			print("You lost a lore you didn't have?  This shouldn't happen.")
 
@@ -168,7 +171,7 @@ class User():
 		print("show health")
 		print("heal up")
 		print("go fishing")
-		print("equipt lure")
+		print("equip lure")
 		print("eat a fish")
 		print("travel away")
 		print("show inventory")

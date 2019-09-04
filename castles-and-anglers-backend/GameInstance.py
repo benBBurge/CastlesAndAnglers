@@ -59,8 +59,8 @@ class GameInstance():
 				self.currentLocation = myWords
 				print("you went to " + myWords)
 				me.chanceToFindBait()
-			elif(myWords == "equipt lure"):
-				me.equiptLure()
+			elif(myWords == "equip lure"):
+				me.equipLure()
 			elif(myWords != ''):
 				print("Sorry, I didn't catch that.")
 				print("You can quit by typing quit.")

@@ -24,15 +24,19 @@ class FishingActivities():
 		if 'fishing rod' in user.userInventory.inventory:
 			outcomes = ['win', 'lose', 'draw']
 			print("You are using the fishing rod\n")
-		elif 'lured rod' in user.userInventory.inventory:
-			outcomes = ['win', 'win', 'snag']
-			print("You are fishing with the lured rod\n")
-		elif 'worm rod' in user.userInventory.inventory:
-			outcomes = ['win', 'trade', 'snag']
-			print("You are fishing with the worm rod\n")
 		elif 'bread rod' in user.userInventory.inventory:
 			outcomes = ['win', 'trade', 'snag', 'snag']
 			print("You are fishing with the bread rod\n")
+		elif 'fly rod' in user.userInventory.inventory:
+			outcomes = ['win', 'win', 'win', 'snag']
+			print("You are fishing with the fly rod\n")
+		elif 'lured rod' in user.userInventory.inventory:
+			outcomes = ['win', 'win', 'win', 'snag']
+			print("You are fishing with the lured rod\n")
+		elif 'worm rod' in user.userInventory.inventory:
+			outcomes = ['win', 'trade', 'trade']
+			print("You are fishing with the worm rod\n")
+
 		cls.castPole()
 		random.shuffle(outcomes)
 		currentFishingOutcome = outcomes[0]

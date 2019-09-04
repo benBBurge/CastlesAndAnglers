@@ -2,7 +2,7 @@ class UserInventory():
 
 	def __init__(self):
 			self.inventory = []
-			self.startingInventory = ['fishing rod', 'bread', 'bow', 'arrows', 'lure', 'worm']
+			self.startingInventory = ['fishing rod', 'bread', 'bow', 'arrows', 'fly']
 			self.x = 0
 			self.y = 0
 			self.populate()
